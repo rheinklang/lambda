@@ -2,3 +2,19 @@
   command = "npm run build"
   functions = "lambda"
   publish = "build"
+
+[[headers]]
+  for = "/.netlify/functions/cockpit-slack-consierge"
+  [headers.values]
+    # basic security headers
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    #  cors restrictions
+    Access-Control-Allow-Origin = "https://cockpit.rheinklang-festival.ch"
+    Access-Control-Max-Age = 86400
+    # setting cache control header
+    cache-control = '''
+    max-age=0,
+    no-cache,
+    no-store,
+    must-revalidate'''
