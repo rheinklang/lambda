@@ -3,12 +3,12 @@ import { SLACK_WEBHOOK_URL } from '../env';
 import { fetch } from '../native/request';
 import { LambdaEvent } from '../types/LambdaEvent';
 import { CockpitHook } from '../types/CockpitHook';
-import { getErrorResponseBody, generateResponseBody } from '../utils/error';
 import { buildSlackMessageFromCockpitHook } from '../utils/slack';
 import { createResponse } from '../utils/net';
 
-export const handler: Handler<LambdaEvent> = async (event, context, callback) => {
+export const handler: Handler<LambdaEvent> = async (event, context) => {
 	if (!SLACK_WEBHOOK_URL) {
+		console.log('Fatal error, no environment available\n\n', process.env);
 		return createResponse(context, 500, null, `No webhook URL available, please check the admin panel`);
 	}
 
