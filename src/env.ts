@@ -1,25 +1,10 @@
-const env = process.env || {};
+/**
+ * Will be compiled at build time on the netlify server itself
+ */
 
-const parseEnv = <T extends any = null>(field: string | undefined, fallback: T = null): string | T => {
-	const value = process.env[field];
-
-	if (!value || value.length === 0) {
-		return fallback;
-	}
-
-	return value;
-};
-
-export const SLACK_WEBHOOK_URL = parseEnv('SLACK_WEBHOOK_URL');
-
-/** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
-export const BUILD_ID = parseEnv('BUILD_ID');
-
-/** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
-export const CONTEXT = parseEnv('CONTEXT');
-
-/** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
-export const REPOSITORY_URL = parseEnv('REPOSITORY_URL');
-
-/** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
-export const COMMIT_REF = parseEnv('COMMIT_REF');
+export const SLACK_WEBHOOK_URL = '${SLACK_WEBHOOK_URL}';
+export const BUILD_ID = '${BUILD_ID}';
+export const CONTEXT = '${CONTEXT}';
+export const REPOSITORY_URL = '${REPOSITORY_URL}';
+export const COMMIT_REF = '${COMMIT_REF}';
+export const BUILD_TIMESTAMP = '${new Date().toISOString()}';
