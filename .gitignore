@@ -1,0 +1,9 @@
+*.log
+node_modules
+.DS_Store
+
+# tsc output
+build
+
+# netfliy build output
+lambda

@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"target": "ES3",
+		"moduleResolution": "node",
+		"allowJs": true,
+		"outDir": "build",
+		"rootDir": "src",
+		"baseUrl": "."
+	}
+}
