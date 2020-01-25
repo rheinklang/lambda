@@ -1,6 +1,6 @@
-import { CockpitHook } from "../types/CockpitHook";
-import { createBlocksFromUpdateData } from "../types/CockpitUpdateData";
-import { convertUnixTimestampToReadableDate } from "./date";
+import { CockpitHook } from '../types/CockpitHook';
+import { createBlocksFromUpdateData } from '../types/CockpitUpdateData';
+import { convertUnixTimestampToReadableDate } from './date';
 
 export interface SlackField {
 	type: 'text' | 'mrkdwn';
@@ -39,9 +39,9 @@ export const buildFields = (fields: Record<string, any>, map: (value: any) => st
 				...prev,
 				fields[curr]
 					? {
-						type: 'mrkdwn',
-						text: `*${curr}*\n${map(fields[curr])}`,
-					}
+							type: 'mrkdwn',
+							text: `*${curr}*\n${map(fields[curr])}`,
+					  }
 					: null,
 			],
 			[]

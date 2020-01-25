@@ -1,6 +1,6 @@
 import { Handler } from 'aws-lambda';
-import fetch from 'node-fetch';
 import { SLACK_WEBHOOK_URL } from '../env';
+import { fetch } from '../native/request';
 import { LambdaEvent } from '../types/LambdaEvent';
 import { CockpitHook } from '../types/CockpitHook';
 import { getErrorResponseBody, generateResponseBody } from '../utils/error';
@@ -25,13 +25,14 @@ export const handler: Handler<LambdaEvent> = async (event, context, callback) =>
 		const payload: CockpitHook = JSON.parse(event.body);
 		const slackMessage = buildSlackMessageFromCockpitHook(payload);
 
-		await fetch(SLACK_WEBHOOK_URL, {
+		await fetch<unknown>({
 			method: 'POST	',
+			hostname: 'hooks.slack.com',
+			path: SLACK_WEBHOOK_URL,
 			headers: {
-				'content-type': 'application/json',
-			},
-			body: JSON.stringify(slackMessage),
-		});
+				'content-type': 'application/json'
+			}
+		}, JSON.stringify(slackMessage));
 
 		return {
 			statusCode: 200,
