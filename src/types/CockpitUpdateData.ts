@@ -29,11 +29,17 @@ export const createBlocksFromUpdateData = <T extends Record<string, any>>(payloa
 	return Object.keys(realPayload).reduce((prev, curr) => {
 		let contents = payload[curr];
 
-		if (typeof contents !== 'string') {
+		if (typeof contents === 'boolean') {
+			contents = contents ? 'Yes' : 'No';
+		} else if (typeof contents === 'number') {
+			// number is fine
+		} else if (Array.isArray(contents)) {
+			contents = contents.join(', ');
+		} else if (typeof contents !== 'string') {
 			contents = '[Strukturierte Daten]';
+		} else {
+			contents = excerpt(contents, 100);
 		}
-
-		contents = excerpt(contents, 100);
 
 		return {
 			...prev,

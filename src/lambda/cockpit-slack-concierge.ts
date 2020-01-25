@@ -5,20 +5,15 @@ import { LambdaEvent } from '../types/LambdaEvent';
 import { CockpitHook } from '../types/CockpitHook';
 import { getErrorResponseBody, generateResponseBody } from '../utils/error';
 import { buildSlackMessageFromCockpitHook } from '../utils/slack';
+import { createResponse } from '../utils/net';
 
 export const handler: Handler<LambdaEvent> = async (event, context, callback) => {
 	if (!SLACK_WEBHOOK_URL) {
-		return {
-			statusCode: 500,
-			body: getErrorResponseBody(`No webhook URL available, please check the admin panel`, context),
-		};
+		return createResponse(context, 500, null, `No webhook URL available, please check the admin panel`);
 	}
 
 	if (event.body.length === 0) {
-		return {
-			statusCode: 400,
-			body: getErrorResponseBody(`Invalid body detected`, context),
-		};
+		return createResponse(context, 400, null, `Invalid body detected`);
 	}
 
 	try {
@@ -34,14 +29,9 @@ export const handler: Handler<LambdaEvent> = async (event, context, callback) =>
 			}
 		}, JSON.stringify(slackMessage));
 
-		return {
-			statusCode: 200,
-			body: generateResponseBody(context, 'Message sent successfully', null),
-		};
+		return createResponse(context, 200, 'Message sent successfully');
+
 	} catch (err) {
-		return {
-			statusCode: err.code || 500,
-			body: getErrorResponseBody(`${err}`, context),
-		};
+		return createResponse(context, 500, null, `${err}`);
 	}
 };
