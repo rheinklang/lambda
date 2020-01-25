@@ -6,5 +6,9 @@
 		"outDir": "build",
 		"rootDir": "src",
 		"baseUrl": "."
-	}
+	},
+	"exclude": [
+		"lambda",
+		"build"
+	]
 }
