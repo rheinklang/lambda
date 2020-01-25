@@ -4,8 +4,8 @@ const { writeFile } = require('fs');
 const { resolve } = require('path');
 
 const ENV = process.env || {};
-const ROOT = resolve(ROOT, 'src', 'env.ts');
-const TARGET = resolve(__dirname, '..');
+const ROOT = resolve(__dirname, '..');
+const TARGET = resolve(ROOT, 'src', 'env.ts');
 
 const parseEnv = (field, fallback) => {
 	const value = ENV[field];
