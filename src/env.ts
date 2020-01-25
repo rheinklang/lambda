@@ -8,7 +8,7 @@ const parseEnv = <T extends any = null>(field: string | undefined, fallback: T =
 	}
 
 	return value;
-}
+};
 
 export const SLACK_WEBHOOK_URL = parseEnv('SLACK_WEBHOOK_URL');
 
@@ -23,4 +23,3 @@ export const REPOSITORY_URL = parseEnv('REPOSITORY_URL');
 
 /** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
 export const COMMIT_REF = parseEnv('COMMIT_REF');
-

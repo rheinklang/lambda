@@ -19,4 +19,4 @@ export const convertUnixTimestampToReadableDate = (timestamp: number) => {
 	const localDate = date.toLocaleDateString('de-DE', options);
 
 	return `$${localDate} – ${hours}:${minutes}:${seconds}`;
-}
+};

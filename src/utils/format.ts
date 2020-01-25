@@ -9,4 +9,4 @@ export const excerpt = (text: string, limit = 200) => {
 	}
 
 	return text;
-}
+};

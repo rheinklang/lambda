@@ -1,8 +1,8 @@
 import { CockpitUpdateData } from './CockpitUpdateData';
 
 export interface CockpitHook<T extends Record<string, any> = {}> {
-	event: string,
+	event: string;
 	hook: string;
 	backend: number;
-	args: [string, CockpitUpdateData & T, boolean]
+	args: [string, CockpitUpdateData & T, boolean];
 }
