@@ -1,5 +1,12 @@
 import { RequestOptions, request } from 'https';
 
+export enum FetchMethod {
+	POST = 'POST',
+	GET = 'GET',
+	PUT = 'PUT',
+	DELETE = 'DELETE'
+}
+
 export const fetch = <T>(opts: RequestOptions, data?: string) => {
 	return new Promise<T>((resolve, reject) => {
 		let responseBody: string;

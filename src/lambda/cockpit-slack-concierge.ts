@@ -1,6 +1,6 @@
 import { Handler } from 'aws-lambda';
 import { SLACK_WEBHOOK_URL } from '../env';
-import { fetch } from '../native/request';
+import { fetch, FetchMethod } from '../native/request';
 import { LambdaEvent } from '../types/LambdaEvent';
 import { CockpitHook } from '../types/CockpitHook';
 import { buildSlackMessageFromCockpitHook } from '../utils/slack';
@@ -21,7 +21,7 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 		const slackMessage = buildSlackMessageFromCockpitHook(payload);
 
 		await fetch<unknown>({
-			method: 'POST	',
+			method: FetchMethod.POST,
 			hostname: 'hooks.slack.com',
 			path: SLACK_WEBHOOK_URL,
 			headers: {
