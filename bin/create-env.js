@@ -43,11 +43,9 @@ export const COMMIT_REF = '${COMMIT_REF}';
 export const BUILD_TIMESTAMP = '${new Date().toISOString()}';
 `;
 
-
-
-writeFile(TARGET, fileContents, err => {
+writeFile(TARGET, fileContents, (err) => {
 	if (err) {
 		console.log(`Failed writing env file: ${err}`);
 		process.exit(1);
 	}
-})
+});

@@ -1,35 +1,35 @@
 {
-  "name": "@rheinklang/service",
-  "version": "0.1.0",
-  "description": "Rheinklang service",
-  "main": "index.js",
-  "scripts": {
-    "postinstall": "netlify-lambda install",
-    "prettier": "prettier --write \"**/*.{js,ts,json}\"",
-    "prebuild": "node ./bin/create-env.js",
-    "build": "npm-run-all build:*",
-    "build:tsc": "tsc",
-    "build:netfliy": "netlify-lambda build ./build/lambda && node -p 'process.env'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rheinklang/service.git"
-  },
-  "author": "Jan Biasi <biasijan@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rheinklang/service/issues"
-  },
-  "homepage": "https://github.com/rheinklang/service#readme",
-  "dependencies": {
-    "netlify-lambda": "1.6.3"
-  },
-  "devDependencies": {
-    "@types/aws-lambda": "8.10.40",
-    "@types/node": "13.5.0",
-    "@types/node-fetch": "2.5.4",
-    "npm-run-all": "4.1.5",
-    "prettier": "1.19.1",
-    "typescript": "3.7.5"
-  }
+	"name": "@rheinklang/service",
+	"version": "0.1.0",
+	"description": "Rheinklang service",
+	"main": "index.js",
+	"scripts": {
+		"postinstall": "netlify-lambda install",
+		"prettier": "prettier --write \"**/*.{js,ts,json}\"",
+		"prebuild": "node ./bin/create-env.js",
+		"build": "npm-run-all build:*",
+		"build:tsc": "tsc",
+		"build:netfliy": "netlify-lambda build ./build/lambda && node -p 'process.env'"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rheinklang/service.git"
+	},
+	"author": "Jan Biasi <biasijan@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/rheinklang/service/issues"
+	},
+	"homepage": "https://github.com/rheinklang/service#readme",
+	"dependencies": {
+		"netlify-lambda": "1.6.3"
+	},
+	"devDependencies": {
+		"@types/aws-lambda": "8.10.40",
+		"@types/node": "13.5.0",
+		"@types/node-fetch": "2.5.4",
+		"npm-run-all": "4.1.5",
+		"prettier": "1.19.1",
+		"typescript": "3.7.5"
+	}
 }
