@@ -29,15 +29,18 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 
 	try {
 		const dataSet = parse(event.body) || {};
+		console.log('DataSet:', dataSet);
 		const selectedData = Object.keys(dataSet)[0] || '{}';
 		const payload: CockpitHook = JSON.parse(selectedData);
 
-		console.log('Payload:', payload)
+		console.log('Payload:', payload);
 
 		const slackMessage = buildSlackMessageFromCockpitHook({
 			...defaultSlackMessage,
 			...payload
 		});
+
+		console.log('Slack message:', slackMessage);
 
 		const response = await fetch<unknown>({
 			method: FetchMethod.POST,
