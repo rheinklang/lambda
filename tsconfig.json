@@ -7,10 +7,5 @@
 		"rootDir": "src",
 		"baseUrl": "."
 	},
-	"exclude": [
-		"lambda",
-		"build",
-		"bin",
-		"deploy"
-	]
+	"exclude": ["lambda", "build", "bin", "deploy"]
 }

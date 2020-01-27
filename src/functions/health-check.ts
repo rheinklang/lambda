@@ -1,23 +1,24 @@
-import { Handler } from "aws-lambda";
-import { LambdaEvent } from "../types/LambdaEvent";
+import { Handler } from 'aws-lambda';
+import { LambdaEvent } from '../types/LambdaEvent';
 import { COCKPIT_URL, FESTIVAL_URL } from '../env';
-import { fetch, FetchMethod } from "../native/request";
-import { createResponse } from "../utils/net";
+import { fetch, FetchMethod } from '../native/request';
+import { createResponse } from '../utils/net';
 
 let lastCheck = 0;
 let lastCheckResult = {
 	cockpit: false,
-	festival: false
-}
+	festival: false,
+};
 
 const CHECK_THRESHOLD = 600;
 
-export const checkHealthOf = (host: string) => fetch(host, {
-	method: FetchMethod.GET
-});
+export const checkHealthOf = (host: string) =>
+	fetch(host, {
+		method: FetchMethod.GET,
+	});
 
 export const handler: Handler<LambdaEvent> = async (_event, context) => {
-	if (lastCheck && ((lastCheck + CHECK_THRESHOLD) < Date.now())) {
+	if (lastCheck && lastCheck + CHECK_THRESHOLD < Date.now()) {
 		// do not check if interval not exceeded
 		return createResponse(context, 200, lastCheckResult);
 	}
@@ -43,8 +44,8 @@ export const handler: Handler<LambdaEvent> = async (_event, context) => {
 
 	lastCheckResult = {
 		cockpit: isCockpitUp,
-		festival: isFestivalUp
+		festival: isFestivalUp,
 	};
 
 	return createResponse(context, 200, lastCheckResult);
-}
+};

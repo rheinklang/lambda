@@ -11,8 +11,8 @@ const defaultSlackMessage: CockpitHook<any> = {
 	event: 'unknown',
 	hook: 'unknown',
 	backend: -1,
-	args: ['unknown', {}, false]
-}
+	args: ['unknown', {}, false],
+};
 
 export const handler: Handler<LambdaEvent> = async (event, context) => {
 	if ((event as any).httpMethod !== FetchMethod.POST) {
@@ -37,7 +37,7 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 
 		const slackMessage = buildSlackMessageFromCockpitHook({
 			...defaultSlackMessage,
-			...payload
+			...payload,
 		});
 
 		console.log('Slack message:', slackMessage);
@@ -45,18 +45,17 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 		const response = await fetch(`https://hooks.slack.com/${SLACK_WEBHOOK_URL}`, {
 			method: FetchMethod.POST,
 			headers: {
-				'content-type': 'application/json'
+				'content-type': 'application/json',
 			},
-			body: JSON.stringify(slackMessage)
+			body: JSON.stringify(slackMessage),
 		});
 
 		const data = await response.json();
 
 		return createResponse(context, 200, {
 			sent: true,
-			response: data
+			response: data,
 		});
-
 	} catch (err) {
 		return createResponse(context, 500, null, `${err}`);
 	}
