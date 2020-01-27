@@ -12,7 +12,7 @@ let lastCheckResult = {
 
 const CHECK_THRESHOLD = 600;
 
-export const checkHealthOf = (host: string) => fetch<void>({
+export const checkHealthOf = (host: string) => fetch<{}>({
 	host,
 	method: FetchMethod.GET,
 	path: '/'

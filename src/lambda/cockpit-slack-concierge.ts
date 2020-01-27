@@ -42,7 +42,7 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 
 		console.log('Slack message:', slackMessage);
 
-		const response = await fetch<unknown>({
+		const response = await fetch<{}>({
 			method: FetchMethod.POST,
 			hostname: 'hooks.slack.com',
 			path: SLACK_WEBHOOK_URL,
