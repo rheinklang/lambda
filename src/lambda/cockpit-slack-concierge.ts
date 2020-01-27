@@ -28,9 +28,11 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 	}
 
 	try {
-		const dataSet = parse(event.body);
-		const selectedData = Object.keys(dataSet)[0];
+		const dataSet = parse(event.body) || {};
+		const selectedData = Object.keys(dataSet)[0] || '{}';
 		const payload: CockpitHook = JSON.parse(selectedData);
+
+		console.log('Payload:', payload)
 
 		const slackMessage = buildSlackMessageFromCockpitHook({
 			...defaultSlackMessage,
