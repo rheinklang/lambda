@@ -42,18 +42,19 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 
 		console.log('Slack message:', slackMessage);
 
-		const response = await fetch<{}>({
+		const response = await fetch(`https://hooks.slack.com/${SLACK_WEBHOOK_URL}`, {
 			method: FetchMethod.POST,
-			hostname: 'hooks.slack.com',
-			path: SLACK_WEBHOOK_URL,
 			headers: {
 				'content-type': 'application/json'
-			}
-		}, JSON.stringify(slackMessage));
+			},
+			body: JSON.stringify(slackMessage)
+		});
+
+		const data = await response.json();
 
 		return createResponse(context, 200, {
 			sent: true,
-			response
+			response: data
 		});
 
 	} catch (err) {

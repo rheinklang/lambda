@@ -12,10 +12,8 @@ let lastCheckResult = {
 
 const CHECK_THRESHOLD = 600;
 
-export const checkHealthOf = (host: string) => fetch<{}>({
-	host,
-	method: FetchMethod.GET,
-	path: '/'
+export const checkHealthOf = (host: string) => fetch(host, {
+	method: FetchMethod.GET
 });
 
 export const handler: Handler<LambdaEvent> = async (_event, context) => {
