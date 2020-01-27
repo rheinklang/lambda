@@ -5,6 +5,10 @@ node_modules
 # tsc output
 build
 
+# dummy config
+/src/env.ts
+
 # netfliy build output
 /lambda
 /deploy/lambda
+/deploy/platform

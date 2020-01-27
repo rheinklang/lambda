@@ -9,7 +9,7 @@
     "prebuild": "node ./bin/create-env.js",
     "build": "npm-run-all build:*",
     "build:tsc": "tsc",
-    "build:netfliy": "netlify-lambda build ./deploy/lambda && node -p 'process.env'"
+    "build:netfliy": "netlify-lambda build ./deploy/platform/lambda && node -p 'process.env'"
   },
   "repository": {
     "type": "git",

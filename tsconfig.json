@@ -3,13 +3,14 @@
 		"target": "ES5",
 		"moduleResolution": "node",
 		"allowJs": true,
-		"outDir": "deploy/lambda",
+		"outDir": "deploy/platform",
 		"rootDir": "src",
 		"baseUrl": "."
 	},
 	"exclude": [
 		"lambda",
 		"build",
-		"bin"
+		"bin",
+		"deploy"
 	]
 }
