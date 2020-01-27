@@ -14,6 +14,7 @@ export const fetch = <T>(opts: RequestOptions, data?: string) => {
 			res.setEncoding('utf8');
 			res.on('data', (chunk) => (responseBody += chunk));
 			res.on('end', () => {
+				console.log(`Request info: ${call.method} ${opts.host} ${call.path}`);
 				console.log(`Request ended with body ${responseBody}`);
 				resolve(JSON.parse(responseBody))
 			});
