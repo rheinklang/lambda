@@ -1,7 +1,7 @@
 [build]
   command = "npm run build"
   functions = "lambda"
-  publish = "build"
+  publish = "deploy/web"
 
 [[headers]]
   for = "/.netlify/functions/cockpit-slack-consierge"

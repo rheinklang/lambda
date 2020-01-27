@@ -7,3 +7,4 @@ build
 
 # netfliy build output
 /lambda
+/deploy/lambda
