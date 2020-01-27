@@ -1,6 +1,6 @@
 import { Handler } from "aws-lambda";
 import { LambdaEvent } from "../types/LambdaEvent";
-import { COCKPIT_URL, FESTIVAL_SITE } from '../env';
+import { COCKPIT_URL, FESTIVAL_URL } from '../env';
 import { fetch } from "../native/request";
 import { createResponse } from "../utils/net";
 
@@ -21,12 +21,12 @@ export const handler: Handler<LambdaEvent> = async (_event, context) => {
 
 	try {
 		await fetch<void>({
-			host: FESTIVAL_SITE,
+			host: FESTIVAL_URL,
 			path: ''
 		});
 		isFestivalUp = true;
 	} catch (err) {
-		console.log(`Health check for ${FESTIVAL_SITE} failed: ${err}`);
+		console.log(`Health check for ${FESTIVAL_URL} failed: ${err}`);
 	}
 
 	return createResponse(context, 200, {
