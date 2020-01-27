@@ -20,7 +20,7 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 
 	try {
 		console.log(`Incoming payload of type "${typeof event.body}":\n\n${event.body}\n\n\n`);
-		console.log('Query parsed: ', parse(event.body));
+		console.log('Query parsed: ', parse(event.body), parse(event.body).event);
 		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}') || {
 			event: 'unknown',
 			hook: 'unknown',
