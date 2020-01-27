@@ -17,17 +17,19 @@ const parseEnv = (field, fallback) => {
 	return value;
 };
 
+/**
+ * Custom environment variables
+ */
 const SLACK_WEBHOOK_URL = parseEnv('SLACK_WEBHOOK_URL');
+const COCKPIT_URL = parseEnv('COCKPIT_URL');
+const FESTIVAL_URL = parseEnv('FESTIVAL_URL');
 
 /** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
 const BUILD_ID = parseEnv('BUILD_ID');
-
 /** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
 const CONTEXT = parseEnv('CONTEXT');
-
 /** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
 const REPOSITORY_URL = parseEnv('REPOSITORY_URL');
-
 /** @see https://docs.netlify.com/configure-builds/environment-variables/#read-only-variables */
 const COMMIT_REF = parseEnv('COMMIT_REF');
 
@@ -40,6 +42,8 @@ export const BUILD_ID = '${BUILD_ID}';
 export const CONTEXT = '${CONTEXT}';
 export const REPOSITORY_URL = '${REPOSITORY_URL}';
 export const COMMIT_REF = '${COMMIT_REF}';
+export const COCKPIT_URL = '${COCKPIT_URL}';
+export const FESTIVAL_URL = '${FESTIVAL_URL}';
 export const BUILD_TIMESTAMP = '${new Date().toISOString()}';
 `;
 
