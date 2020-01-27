@@ -7,6 +7,13 @@ import { CockpitHook } from '../types/CockpitHook';
 import { buildSlackMessageFromCockpitHook } from '../utils/slack';
 import { createResponse } from '../utils/net';
 
+const defaultSlackMessage: CockpitHook<any> = {
+	event: 'unknown',
+	hook: 'unknown',
+	backend: -1,
+	args: ['unknown', {}, false]
+}
+
 export const handler: Handler<LambdaEvent> = async (event, context) => {
 	if ((event as any).httpMethod !== FetchMethod.POST) {
 		return createResponse(context, 405, null, 'Method not allowed');
@@ -23,18 +30,13 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 	try {
 		const dataSet = parse(event.body);
 		const selectedData = Object.keys(dataSet)[0];
-		const result = JSON.parse(selectedData);
+		const payload: CockpitHook = JSON.parse(selectedData);
 
-		console.log('Query parsed: %s \n', result);
+		const slackMessage = buildSlackMessageFromCockpitHook({
+			...defaultSlackMessage,
+			...payload
+		});
 
-		console.log(`Incoming payload of type "${typeof event.body}":\n\n${event.body}\n\n\n`);
-		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}') || {
-			event: 'unknown',
-			hook: 'unknown',
-			backend: -1,
-			args: ['unknown', {}, -1]
-		};
-		const slackMessage = buildSlackMessageFromCockpitHook(payload);
 		const response = await fetch<unknown>({
 			method: FetchMethod.POST,
 			hostname: 'hooks.slack.com',
@@ -43,8 +45,6 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 				'content-type': 'application/json'
 			}
 		}, JSON.stringify(slackMessage));
-
-		console.log('Slack sent:\n', JSON.stringify(response, null, 2));
 
 		return createResponse(context, 200, {
 			sent: true,
