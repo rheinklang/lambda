@@ -1,17 +1,21 @@
 import { Handler } from "aws-lambda";
 import { LambdaEvent } from "../types/LambdaEvent";
 import { COCKPIT_URL, FESTIVAL_URL } from '../env';
-import { fetch } from "../native/request";
+import { fetch, FetchMethod } from "../native/request";
 import { createResponse } from "../utils/net";
+
+export const checkHealthOf = (host: string, port = 80) => fetch<void>({
+	host,
+	port,
+	method: FetchMethod.GET,
+	path: '/'
+});
 
 export const handler: Handler<LambdaEvent> = async (_event, context) => {
 	let isCockpitUp = false;
 
 	try {
-		await fetch<void>({
-			host: COCKPIT_URL,
-			path: ''
-		});
+		await checkHealthOf(COCKPIT_URL);
 		isCockpitUp = true;
 	} catch (err) {
 		console.log(`Health check for ${COCKPIT_URL} failed: ${err}`);
@@ -20,10 +24,7 @@ export const handler: Handler<LambdaEvent> = async (_event, context) => {
 	let isFestivalUp = false;
 
 	try {
-		await fetch<void>({
-			host: FESTIVAL_URL,
-			path: ''
-		});
+		await checkHealthOf(FESTIVAL_URL);
 		isFestivalUp = true;
 	} catch (err) {
 		console.log(`Health check for ${FESTIVAL_URL} failed: ${err}`);
