@@ -8,19 +8,26 @@ import { buildSlackMessageFromCockpitHook } from '../utils/slack';
 import { createResponse } from '../utils/net';
 
 export const handler: Handler<LambdaEvent> = async (event, context) => {
+	if ((event as any).httpMethod !== FetchMethod.POST) {
+		return createResponse(context, 405, null, 'Method not allowed');
+	}
+
 	if (!SLACK_WEBHOOK_URL) {
-		console.log('Fatal error, no environment available\n\n', process.env);
 		return createResponse(context, 500, null, `No webhook URL available, please check the admin panel`);
 	}
 
 	if (event.body.length === 0) {
-		console.log(`Invalid body detected: "${event.body || '<empty>'}"`);
 		return createResponse(context, 400, null, `Invalid body detected`);
 	}
 
 	try {
+		const dataSet = parse(event.body);
+		const selectedData = Object.keys(dataSet)[0];
+		const result = JSON.parse(selectedData);
+
+		console.log('Query parsed: %s \n', result);
+
 		console.log(`Incoming payload of type "${typeof event.body}":\n\n${event.body}\n\n\n`);
-		console.log('Query parsed: ', parse(event.body), parse(event.body).event);
 		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}') || {
 			event: 'unknown',
 			hook: 'unknown',
