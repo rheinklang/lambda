@@ -1,13 +1,10 @@
-import { generateResponseBody } from './error';
 import { Context } from 'aws-lambda';
+import { NetMessage } from '../types';
+import { BUILD_ID, COMMIT_REF } from '../env';
 
-export const createResponse = (context: Context, code: number, message?: string | Record<any, any>, error?: string) => {
+export const createResponse = (context: Context, code: number, message?: NetMessage, error?: string) => {
 	if (error) {
 		console.log(`An error occured: ${error} (at ${context.functionName} – ${context.identity})`);
-	}
-
-	if (typeof message !== 'string') {
-		message = JSON.stringify(message);
 	}
 
 	return {
@@ -15,3 +12,13 @@ export const createResponse = (context: Context, code: number, message?: string 
 		body: generateResponseBody(context, message, error),
 	};
 };
+
+export const generateResponseBody = (context: Context, message?: NetMessage, error?: string) =>
+	JSON.stringify({
+		data: message,
+		error,
+		id: context.awsRequestId,
+		remain: context.getRemainingTimeInMillis(),
+		build: BUILD_ID,
+		ref: COMMIT_REF,
+	});

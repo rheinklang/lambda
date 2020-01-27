@@ -1,14 +1,6 @@
 import { Context } from 'aws-lambda';
-import { BUILD_ID, COMMIT_REF } from '../env';
+import { generateResponseBody } from './net';
 
-export const generateResponseBody = (context: Context, message?: string, error?: string) =>
-	JSON.stringify({
-		data: message,
-		error,
-		id: context.awsRequestId,
-		remain: context.getRemainingTimeInMillis(),
-		build: BUILD_ID,
-		ref: COMMIT_REF,
-	});
-
-export const getErrorResponseBody = (message: string, context: Context) => generateResponseBody(context, null, message);
+export const getErrorResponseBody = (message: string, context: Context) =>
+	// TODO: What should we generate exactly at this point? Stacktraces? Code?
+	generateResponseBody(context, null, message);
