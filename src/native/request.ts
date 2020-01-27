@@ -7,7 +7,7 @@ export enum FetchMethod {
 	DELETE = 'DELETE'
 }
 
-export const fetch = <T>(opts: RequestOptions, data?: string) => {
+export const fetch = <T extends object>(opts: RequestOptions, data?: string) => {
 	return new Promise<T>((resolve, reject) => {
 		const call = request(opts, (res) => {
 			let responseBody: string;
@@ -15,8 +15,20 @@ export const fetch = <T>(opts: RequestOptions, data?: string) => {
 			res.on('data', (chunk) => (responseBody += chunk));
 			res.on('end', () => {
 				console.log(`Request info: ${call.method} ${opts.host} ${call.path}`);
-				console.log(`Request ended with body ${responseBody}`);
-				resolve(JSON.parse(responseBody))
+				console.log(`Response ${res.statusCode} body ${responseBody}`);
+
+				if (res.statusCode > 300) {
+					return resolve(res as T)
+				}
+
+				try {
+					resolve(JSON.parse(responseBody))
+				} catch (err) {
+					resolve({
+						error: err
+					} as T);
+				}
+
 			});
 		});
 
