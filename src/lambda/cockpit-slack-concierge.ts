@@ -30,7 +30,9 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 			}
 		}, JSON.stringify(slackMessage));
 
-		return createResponse(context, 200, 'Message sent successfully');
+		return createResponse(context, 200, {
+			sent: true,
+		});
 
 	} catch (err) {
 		return createResponse(context, 500, null, `${err}`);

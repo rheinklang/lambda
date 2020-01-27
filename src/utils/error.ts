@@ -3,7 +3,7 @@ import { BUILD_ID, COMMIT_REF } from '../env';
 
 export const generateResponseBody = (context: Context, message?: string, error?: string) =>
 	JSON.stringify({
-		message,
+		data: message,
 		error,
 		id: context.awsRequestId,
 		remain: context.getRemainingTimeInMillis(),
