@@ -1,6 +1,6 @@
 import { Handler } from "aws-lambda";
 import { LambdaEvent } from "../types/LambdaEvent";
-import { COCKPIT_URL, FESTIVAL_SITE_URL } from '../env';
+import { COCKPIT_URL, FESTIVAL_SITE } from '../env';
 import { fetch } from "../native/request";
 
 export const handler: Handler<LambdaEvent> = async () => {
@@ -20,7 +20,7 @@ export const handler: Handler<LambdaEvent> = async () => {
 
 	try {
 		await fetch<void>({
-			host: FESTIVAL_SITE_URL,
+			host: FESTIVAL_SITE,
 			path: ''
 		});
 		isFestivalUp = true;
