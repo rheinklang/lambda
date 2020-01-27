@@ -1,4 +1,5 @@
 import { Handler } from 'aws-lambda';
+import { parse } from 'querystring';
 import { SLACK_WEBHOOK_URL } from '../env';
 import { fetch, FetchMethod } from '../native/request';
 import { LambdaEvent } from '../types/LambdaEvent';
@@ -19,6 +20,7 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 
 	try {
 		console.log(`Incoming payload of type "${typeof event.body}":\n\n${event.body}\n\n\n`);
+		console.log('Query parsed: ', parse(event.body));
 		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}') || {
 			event: 'unknown',
 			hook: 'unknown',
