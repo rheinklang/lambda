@@ -13,15 +13,20 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 	}
 
 	if (event.body.length === 0) {
+		console.log(`Invalid body detected: "${event.body || '<empty>'}"`);
 		return createResponse(context, 400, null, `Invalid body detected`);
 	}
 
 	try {
-		console.log('Incoming payload %s', typeof event.body, event.body)
-		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}');
+		console.log(`Incoming payload of type "${typeof event.body}":\n\n${event.body}\n\n\n`);
+		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}') || {
+			event: 'unknown',
+			hook: 'unknown',
+			backend: -1,
+			args: ['unknown', {}, -1]
+		};
 		const slackMessage = buildSlackMessageFromCockpitHook(payload);
-
-		await fetch<unknown>({
+		const response = await fetch<unknown>({
 			method: FetchMethod.POST,
 			hostname: 'hooks.slack.com',
 			path: SLACK_WEBHOOK_URL,
@@ -30,8 +35,11 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 			}
 		}, JSON.stringify(slackMessage));
 
+		console.log('Slack sent:\n', JSON.stringify(response, null, 2));
+
 		return createResponse(context, 200, {
 			sent: true,
+			response
 		});
 
 	} catch (err) {
