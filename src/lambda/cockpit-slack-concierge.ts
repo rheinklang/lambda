@@ -17,7 +17,8 @@ export const handler: Handler<LambdaEvent> = async (event, context) => {
 	}
 
 	try {
-		const payload: CockpitHook = JSON.parse(event.body);
+		console.log('Incoming payload %s', typeof event.body, event.body)
+		const payload: CockpitHook = JSON.parse(`${event.body}` || '{}');
 		const slackMessage = buildSlackMessageFromCockpitHook(payload);
 
 		await fetch<unknown>({
